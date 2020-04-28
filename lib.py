@@ -44,9 +44,8 @@ class FolderHandler:
             rc = subprocess.call(['7z', 'a', '-mem=AES256', '-p'+self.password, '-y', self.archive_path] + 
                      [self.path])
         else:
-            rc = subprocess.call(['7z', 'a', '-mem=AES256', '-y', self.archive_path] + 
-                     [self.path])
-        
+            shutil.make_archive(self.__name__,'zip',self.path)
+
     def upload_file(self,db_handler):
         now = datetime.now()
         dbx = db_handler.dbx
