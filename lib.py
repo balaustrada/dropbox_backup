@@ -73,7 +73,6 @@ class FolderHandler:
                     dbx.files_upload_session_finish(f.read(CHUNK_SIZE),
                                                     cursor,
                                                     commit)
-                    logging.debug('File uploaded')
                 else:
                     dbx.files_upload_session_append(f.read(CHUNK_SIZE),
                                                     cursor.session_id,
