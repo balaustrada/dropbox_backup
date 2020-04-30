@@ -116,7 +116,7 @@ class DropboxHandler:
             if len(month_to_three_months) > 5:
                 remove_times.extend( to_remove_closer_elements(month_to_three_months, 3600*24*15) )
 
-            for x in remove_times:        
+            for x in set(remove_times):        
                 self.dbx.files_delete(entries[x])
             
     
