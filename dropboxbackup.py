@@ -1,8 +1,7 @@
 from lib import (to_remove_closer_elements, FolderHandler, DropboxHandler, get_password)
 import argparse
 import logging
-#logging.basicConfig(level=logging.DEBUG, format='%(asctime)s -  %(levelname)s
--  %(message)s')
+#logging.basicConfig(level=logging.DEBUG, format='%(asctime)s -  %(levelname)s -  %(message)s')
 logging.disable()
 
 parser = argparse.ArgumentParser(description='Backup to dropbox given folder')
