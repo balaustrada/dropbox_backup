@@ -1,4 +1,4 @@
-# dropbox_backup
+# Dropbox Backup
 Python code to handle backups using the DROPBOX api. 
 
 The usage is very simple:
