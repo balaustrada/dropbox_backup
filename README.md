@@ -2,7 +2,7 @@
 Python code to handle backups using the DROPBOX api. 
 
 The usage is very simple:
-- -t defines the token from Dropbox needed to acces the Dropbox contnet.
+- -t defines the token from Dropbox needed to acces the Dropbox content.
 - -p defines the path to be backuped
 - -n defines the name of the folder where the backup will be stored (inside Dropbox). 
 
