@@ -18,6 +18,7 @@ args = parser.parse_args()
 password = get_password(args.password_path,args.password)
 
 db_handler = DropboxHandler(args.token)
+db_handler.delete_older_backups(f'/Backups/{ args.name }}')
 folder = FolderHandler(args.name,args.path,db_handler,password)
 folder.make_archive()
 folder.upload_file(db_handler)
