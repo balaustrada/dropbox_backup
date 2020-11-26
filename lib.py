@@ -36,7 +36,6 @@ class FolderHandler:
         self.__name__ = name
         self.path = path
         self.password = password
-        db_handler.delete_older_backups('/'+self.__name__)
         
     def make_archive(self):
         self.archive_path = self.__name__ + '.zip'
@@ -46,11 +45,15 @@ class FolderHandler:
         else:
             shutil.make_archive(self.__name__,'zip',self.path)
 
-    def upload_file(self,db_handler):
+    def upload_file(self,db_handler, single_file=False):
         now = datetime.now()
         dbx = db_handler.dbx
         file_path = self.archive_path
-        destination_path = '/' + self.__name__ + '/'+now.strftime("version-%Y-%m-%d-%H-%M-%S.zip")
+        
+        if single_file:
+            destination_path = '/' + self.__name__
+        else:
+            destination_path = '/' + self.__name__ + '/'+now.strftime("version-%Y-%m-%d-%H-%M-%S.zip")
         
         f = open(file_path, 'rb')
         file_size = os.path.getsize(file_path)
@@ -84,13 +87,27 @@ class FolderHandler:
     
     def remove_archive(self):
         os.remove(self.archive_path)
-    
+
 class DropboxHandler:
     def __init__(self,token):
         with open(token,'r') as file:
             token = file.read().replace('\n', '')
         self.dbx = db.Dropbox(token)
-               
+
+    def file_exists(self, path):
+        try:
+            self.dbx.files_get_metadata(path)
+            return True
+        except:
+            return False
+
+    def backup_old_backup(self, path):
+        if self.file_exists(path + '_old.zip'):
+            self.dbx.files_delete(path + '_old.zip')
+        
+        if self.file_exists(path):
+            _ = self.dbx.files_move(from_path=path, to_path=path + '_old.zip')
+
     def delete_older_backups(self,path):
         try:
             self.dbx.files_create_folder(path)
